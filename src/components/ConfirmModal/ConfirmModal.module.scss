@@ -1,0 +1,19 @@
+.ConfirmModalBlock {
+    width: 100%;
+}
+
+.title {
+    margin-top: 0;
+}
+
+.buttonBlock {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.closeButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

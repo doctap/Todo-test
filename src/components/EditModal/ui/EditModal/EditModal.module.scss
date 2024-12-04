@@ -1,0 +1,15 @@
+.closeButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.EditModalBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    margin-top: 0;
+}

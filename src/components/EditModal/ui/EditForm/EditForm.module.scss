@@ -1,0 +1,18 @@
+.EditForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.buttonBlock {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
