@@ -76,11 +76,23 @@ export const TodoItem = memo((props: ITodoItemProps) => {
                     <Button onClick={onSwitchHandler}>Удалить</Button>
                 </td>
                 <td>
-                    <a className={cls.link} onClick={() => onNavigate(`/todo/${id}`, {state: { id }})}>Link</a>
+                    <a
+                        tabIndex={0}
+                        className={cls.link}
+                        onClick={() => onNavigate(`/todo/${id}`, { state: { id } })}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onNavigate(`/todo/${id}`, { state: { id } });
+                            }
+                        }}
+                    >
+                        Link
+                    </a>
                 </td>
             </tr>
             {isShowConfirmModal && (
-                <ConfirmModal 
+                <ConfirmModal
                     isOpen={isShowConfirmModal}
                     onClose={onSwitchHandler}
                     onConfirm={onDeleteHandler}

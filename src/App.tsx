@@ -1,16 +1,18 @@
 import { Suspense, useEffect } from 'react'
 import './App.css'
 import { AppRouter } from './app/router/ui/AppRouter'
-import { getSearchParams, useAppDispatch } from './shared';
+import { getSearchParamsObj, useAppDispatch } from './shared';
 import { fetchTodos } from './app/store/tableSlice/services/fetchTodos';
 import { tableAction } from './app/store/tableSlice/slice/tableSlice';
+import { useLocation } from 'react-router';
 
 function App() {
   const dispatch = useAppDispatch();
+  const { search } = useLocation();
 
   useEffect(() => {
     dispatch(fetchTodos())
-      .then(() => dispatch(tableAction.filterBy(getSearchParams(window.location.search))))
+      .then(() => dispatch(tableAction.filterBy(getSearchParamsObj(search))))
     return () => {
 
     }

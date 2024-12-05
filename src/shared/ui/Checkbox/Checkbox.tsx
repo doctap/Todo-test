@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes, memo } from 'react'
+import { InputHTMLAttributes, memo } from 'react'
 import { classNames } from '../../lib'
 import cls from './Checkbox.module.scss'
 
@@ -15,16 +15,18 @@ export const Checkbox = memo((props: ICheckboxProps) => {
         ...otherProps
     } = props
 
-    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        onChange(event.target.checked);
-    }
-
     return (
         <input
             {...otherProps}
             type="checkbox"
             checked={checked}
-            onChange={onChangeHandler}
+            onChange={(e) => onChange(e.target.checked)}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    onChange(e.currentTarget.checked);
+                }
+            }}
             className={classNames(cls.Checkbox, {}, [className])}
         />
     )

@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react'
 import { ITodo, SelectedTodoPayload, SelectionTodoAction, TodoItem } from '../../../../components/TodoItem'
-import { classNames, getSearchParams, useAppDispatch } from '../../../../shared'
+import { classNames, useAppDispatch } from '../../../../shared'
 import cls from './Table.module.scss'
 import { Button } from '../../../../shared/ui'
 import { EditModal } from '../../../EditModal/ui/EditModal/EditModal'
 import { deleteTodoById } from '../../../../app/store/todoSlice/services/deleteTodoById'
 import { updatingTodo } from '../../../../app/store/todoSlice/services/updateTodo'
-import { NavigateOptions } from 'react-router'
+import { NavigateOptions, useSearchParams } from 'react-router'
 
 export interface ITableProps {
     className?: string
@@ -14,6 +14,8 @@ export interface ITableProps {
     onFilter: (step: number) => void
     onNavigate: (path: string, options?: NavigateOptions) => void
 }
+
+export const filterByCompleteStep = ['true', 'false'] as const;
 
 export const Table = (props: ITableProps) => {
     const {
@@ -24,7 +26,13 @@ export const Table = (props: ITableProps) => {
     } = props
 
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
-    const [filterByCompleting, setFilterByCompleting] = useState(0);
+    const [searchParams] = useSearchParams();
+
+    const [filterByCompleting, setFilterByCompleting] = useState(
+        filterByCompleteStep.indexOf(
+            searchParams.get('completed') as typeof filterByCompleteStep[number]
+        ) + 1
+    );
     const [editableTodoId, setEditableTodoId] = useState(-1);
     const dispatch = useAppDispatch();
 
@@ -38,7 +46,7 @@ export const Table = (props: ITableProps) => {
         })
 
         onFilter(filterByCompleting);
-    }, [onFilter]);
+    }, [onFilter, filterByCompleting]);
 
     const onCloseEditModal = useCallback(() => {
         setIsModalEditOpen(prev => !prev)
@@ -68,7 +76,7 @@ export const Table = (props: ITableProps) => {
     }, [onNavigate]);
 
     const mods = {
-        [cls.filterEnabled]: getSearchParams(window.location.search).completed !== undefined
+        [cls.filterEnabled]: searchParams.get('completed') !== null
     }
 
     const todos = items.map(todo => (

@@ -79,7 +79,6 @@ export const Modal = (props: IModalProps) => {
 
     useEffect(() => {
         if (divref.current) {
-            console.log('khvggfcv');
             const focusableElements = divref.current.querySelectorAll<HTMLFormElement>(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             );
